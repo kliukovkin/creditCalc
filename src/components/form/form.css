@@ -1,0 +1,12 @@
+form{
+    width: 300px;
+    margin: 100px;
+}
+input[type='text']{
+    width: 150px;
+    float: right;
+}
+label{
+    text-align: left;
+}
+

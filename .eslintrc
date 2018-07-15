@@ -1,0 +1,23 @@
+{
+  "extends": "ringcentral",
+  "parserOptions": {
+    "sourceType": "module",
+    "ecmaVersion": 8,
+    "ecmaFeatures": {
+      "experimentalObjectRestSpread": true
+    }
+  },
+  "parser": "babel-eslint",
+  "env": {
+    "es6": true,
+    "node": true
+  },
+  "rules": {
+    "no-unused-vars": 0,
+    "no-undef": 0,
+    "no-void": 2,
+    "no-multiple-empty-lines": 2,
+    "quotes": [2, "single"],
+    "jsx-quotes": 2
+  }
+}

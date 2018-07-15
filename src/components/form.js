@@ -1,15 +1,20 @@
 import React, {Component} from 'react';
-import {Form, FormControl, FormGroup, Col, ControlLabel} from 'react-bootstrap';
+import {Form, FormGroup, Col, ControlLabel} from 'react-bootstrap';
+import NumberFormat from 'react-number-format';
 
 export default class myForm extends Component {
-    state = {
-        totalAmount: 1000000
-    };
+    constructor(props){
+        super(props);
+        this.state = {
+            totalAmount: 1000000
+        };
+        this.handleChange = this.handleChange.bind(this);
+    }
 
-    handleChange(event) {
-        console.log(event.target.name, this.state);
+    handleChange(event, value) {
+        console.log(value);
         this.setState({
-            [event.target.name]: event.target.value
+            [event.target.name]: value
         });
     }
 
@@ -21,22 +26,27 @@ export default class myForm extends Component {
                         Total amount
                     </Col>
                     <Col>
-                        <FormControl
-                            type="number"
+                        <NumberFormat
+                            displayType={'input'}
+                            thousandSeparator={true}
                             name="totalAmount"
                             placeholder="Total amount"
                             value={this.state.totalAmount}
-                            onChange={this.handleChange.bind(this)}
+                            onValueChange={(values, event) => {
+                                const {value} = values;
+                                console.log(value);
+                                this.handleChange(event, value);
+                            }}
                         />
                     </Col>
                 </FormGroup>
 
                 <FormGroup controlId="formHorizontalPassword">
-                    <Col componentClass={ControlLabel} >
+                    <Col componentClass={ControlLabel}>
                         Procents
                     </Col>
                     <Col>
-                        <FormControl type="number" placeholder="Procents"/>
+                        <NumberFormat placeholder="Procents"/>
                     </Col>
                 </FormGroup>
             </Form>

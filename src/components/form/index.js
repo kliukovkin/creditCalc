@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Form, FormGroup, ControlLabel, Radio, Button } from 'react-bootstrap';
+import { Form, FormGroup, ControlLabel, Radio, Button, FormControl } from 'react-bootstrap';
 import NumberFormat from 'react-number-format';
 import './style.css';
 
@@ -12,11 +12,11 @@ export class MyForm extends Component {
             term: '',
             payment: '',
             selectedOption: 'term',
-            earlyPayment: ''
+            earlyPayment: '',
+            overpayment: '',
         };
         this.handleInput = this.handleInput.bind(this);
         this.handleRadioChange = this.handleRadioChange.bind(this);
-        this.calculate = this.calculate.bind(this);
         this.submit = this.submit.bind(this);
     }
 
@@ -46,20 +46,40 @@ export class MyForm extends Component {
     }
 
     calculate() {
-
+        if (earlyPayment) {
+            this.calculateWithEarlyPayments();
+        }
         let { totalAmount, percents, term: months, payment, earlyPayment } = this.state;
         const MIR = percents  / (12*100);//MIR = monthly interested rate
         const annuityFactor = MIR * Math.pow( (1+MIR), + months ) / ( Math.pow( (1+MIR), + months ) - 1 );
 
         payment = annuityFactor * totalAmount;
         payment = payment - (payment % 1);
+
+        const overpayment = payment * months - totalAmount;
+
         this.setState({
-            totalAmount,
-            percents,
             term: months,
             payment,
-            earlyPayment
+            overpayment
         });
+
+        if (earlyPayment) {
+            this.calculateWithEarlyPayments();
+        }
+
+    }
+
+    calculateWithEarlyPayments() {
+        let { totalAmount, percents, term: months, payment, earlyPayment } = this.state;
+
+        if (earlyPayment < payment) {
+            return;
+        }
+
+        for (let i = 0; i < months; i++) {
+
+        }
     }
 
     submit() {
@@ -165,6 +185,11 @@ export class MyForm extends Component {
                 }}>
                     Calculate
                 </Button>
+                <FormControl
+                    readOnly
+                    style={{ color: 'red' }}
+                    value={this.state.overpayment}
+                />
             </Form>
         );
     }

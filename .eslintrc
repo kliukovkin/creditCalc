@@ -19,6 +19,7 @@
     "no-multiple-empty-lines": 2,
     "quotes": [2, "single"],
     "jsx-quotes": 2,
-    "object-curly-spacing": ["error", "always"]
+    "object-curly-spacing": ["error", "always"],
+    "space-after-keywords": "error"
   }
 }
